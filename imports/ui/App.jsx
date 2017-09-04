@@ -59,7 +59,7 @@ class App extends Component {
             Hide Drafted
           </label>
  
-          <form className="new-player" onChange={this.search.bind(this)} >
+          <form className="search-player" onChange={this.search.bind(this)} >
             <input
               type="text"
               ref="textInput"
