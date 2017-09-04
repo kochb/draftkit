@@ -62,8 +62,15 @@ form {
   font-weight: bold;
   color: green;
 }
+
+.player .incremental_value {
+  font-weight: bold;
+  color: red;
+}
  
 ul {
+  float: left;
+  width: 50%;
   margin: 0;
   padding: 0;
   background: white;

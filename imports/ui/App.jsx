@@ -5,6 +5,16 @@ import { createContainer } from 'meteor/react-meteor-data';
  
 import { Players } from '../api/players.js';
 import Player from './Player.jsx';
+
+const limits = {
+  'QB': 1,
+  'RB': 2,
+  'WR': 2,
+  'TE': 1,
+  'K': 1,
+  'DST': 1,
+  'FLEX': 1,
+};
  
 // App component - represents the whole app
 class App extends Component {
@@ -13,7 +23,7 @@ class App extends Component {
  
     this.state = {
       search: '',
-      hideDrafted: true,
+      hideUnavailable: true,
     };
   }
 
@@ -26,28 +36,75 @@ class App extends Component {
     const text = ReactDOM.findDOMNode(this.refs.textInput).value.trim();
 
     this.setState({
-      hideDrafted: this.state.hideDrafted,
+      hideUnavailable: this.state.hideUnavailable,
       search: text,
     });
   }
  
-  toggleHideDrafted() {
+  toggleHideUnavailable() {
     this.setState({
-      hideDrafted: !this.state.hideDrafted,
+      hideUnavailable: !this.state.hideUnavailable,
     });
   }
  
   renderPlayers() {
     let filteredPlayers = this.props.players;
     filteredPlayers = filteredPlayers.filter(player => player.name.toLowerCase().includes(this.state.search));
-    if (this.state.hideDrafted) {
+    if (this.state.hideUnavailable) {
       filteredPlayers = filteredPlayers.filter(player => (player.available == null || player.available));
     }
-    filteredPlayers = filteredPlayers.sort((a, b) => b.value - a.value)
-    console.log(filteredPlayers);
+    filteredPlayers = filteredPlayers.sort((a, b) => this.playerIncrementalValue(b) - this.playerIncrementalValue(a));
     return filteredPlayers.map((player) => (
-      <Player key={player._id} player={player} />
+      <Player key={player._id} player={player} incremental_value={this.playerIncrementalValue(player)} />
     ));
+  }
+
+  getTeam() {
+    let filteredPlayers = this.props.players;
+    filteredPlayers = filteredPlayers.filter(player => player.drafted);
+    return filteredPlayers;
+  }
+ 
+  renderTeam() {
+    let filteredPlayers = this.getTeam();
+    filteredPlayers = filteredPlayers.sort((a, b) => this.playerValue(b) - this.playerValue(a));
+    return filteredPlayers.map((player) => (
+      <Player key={player._id} player={player} incremental_value={this.playerIncrementalValue(player)} />
+    ));
+  }
+
+  playerValue(player) {
+    return player.value;
+  }
+
+  playerIncrementalValue(player) {
+    let counts = {'QB':0,'RB':0,'WR':0,'TE':0,'FLEX':0,'DST':0,'K':0};
+    let filteredPlayers = this.getTeam();
+    filteredPlayers.push(player);
+    filteredPlayers = filteredPlayers.sort((a, b) => this.playerValue(b) - this.playerValue(a));
+    new_value = filteredPlayers.reduce(function (result, player) {
+      counts[player.position] += 1;
+      if (counts[player.position] <= limits[player.position]) {
+        return result + player.value;
+      } else {
+        return result;
+      }
+    }, 0);
+    return new_value - this.teamValue();
+  }
+
+  teamValue() {
+    let filteredPlayers = this.getTeam();
+    let counts = {'QB':0,'RB':0,'WR':0,'TE':0,'FLEX':0,'DST':0,'K':0};
+    filteredPlayers = filteredPlayers.sort((a, b) => this.playerValue(b) - this.playerValue(a));
+    return filteredPlayers.reduce(function (result, player) {
+      counts[player.position] += 1;
+      if (counts[player.position] <= limits[player.position]) {
+        return result + player.value;
+      } else {
+        return result;
+      }
+    }, 0);
   }
  
   render() {
@@ -55,6 +112,7 @@ class App extends Component {
       <div className="container">
         <header>
 	  <h1>Draft Kit</h1>
+	  <p>Team Value {this.teamValue()}</p>
 
 	  <button onClick={this.reset.bind(this)}>Reset</button>
 
@@ -62,10 +120,10 @@ class App extends Component {
             <input
               type="checkbox"
               readOnly
-              checked={this.state.hideDrafted}
-              onClick={this.toggleHideDrafted.bind(this)}
+              checked={this.state.hideUnavailable}
+              onClick={this.toggleHideUnavailable.bind(this)}
             />
-            Hide Drafted
+            Hide Unavailable
           </label>
  
           <form className="search-player" onChange={this.search.bind(this)} >
@@ -79,6 +137,10 @@ class App extends Component {
  
         <ul>
           {this.renderPlayers()}
+        </ul>
+
+        <ul className="drafted">
+          {this.renderTeam()}
         </ul>
       </div>
     );

@@ -26,6 +26,7 @@ export default class Player extends Component {
         <span className="team">{this.props.player.team}</span>
         <span className="position">{this.props.player.position}</span>
         <span className="value">{this.props.player.value}</span>
+        <span className="incremental_value">{this.props.incremental_value}</span>
       </li>
     );
   }
