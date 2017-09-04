@@ -38,6 +38,8 @@ class App extends Component {
     if (this.state.hideDrafted) {
       filteredPlayers = filteredPlayers.filter(player => (player.available == null || player.available));
     }
+    filteredPlayers = filteredPlayers.sort((a, b) => b.value - a.value)
+    console.log(filteredPlayers);
     return filteredPlayers.map((player) => (
       <Player key={player._id} player={player} />
     ));
@@ -78,12 +80,11 @@ class App extends Component {
 
 App.propTypes = {
   players: PropTypes.array.isRequired,
-  incompleteCount: PropTypes.number.isRequired,
 };
  
 export default createContainer(() => {
   return {
-    players: Players.find({}, { sort: { value: -1 } }).fetch(),
-    incompleteCount: Players.find({ checked: { $ne: true } }).count(),
+    players: Players.find({}).fetch(),
+    //players: Players.find({}, { sort: { value: -1 } }).fetch(),
   };
 }, App);
