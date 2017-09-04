@@ -16,15 +16,4 @@ Meteor.methods({
       createdAt: new Date(),
     });
   },
-  'players.remove'(playerId) {
-    check(playerId, String);
- 
-    Players.update(playerId, { $set: { available: false } });
-  },
-  'players.setChecked'(playerId, setChecked) {
-    check(playerId, String);
-    check(setChecked, Boolean);
- 
-    Players.update(playerId, { $set: { checked: setChecked } });
-  },
 });
