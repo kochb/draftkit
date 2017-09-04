@@ -11,37 +11,32 @@ class App extends Component {
     super(props);
  
     this.state = {
-      hideCompleted: false,
+      search: '',
+      hideDrafted: true,
     };
   }
  
-  handleSubmit(event) {
+  search(event) {
     event.preventDefault();
- 
-    // Find the text field via the React ref
     const text = ReactDOM.findDOMNode(this.refs.textInput).value.trim();
 
-    Meteor.call('tasks.insert', text);
- 
-    Tasks.insert({
-      text,
-      createdAt: new Date(), // current time
+    this.setState({
+      hideDrafted: this.state.hideDrafted,
+      search: text,
     });
- 
-    // Clear form
-    ReactDOM.findDOMNode(this.refs.textInput).value = '';
   }
  
-  toggleHideCompleted() {
+  toggleHideDrafted() {
     this.setState({
-      hideCompleted: !this.state.hideCompleted,
+      hideDrafted: !this.state.hideDrafted,
     });
   }
  
   renderTasks() {
     let filteredTasks = this.props.tasks;
-    if (this.state.hideCompleted) {
-      filteredTasks = filteredTasks.filter(task => !task.checked);
+    filteredTasks = filteredTasks.filter(player => player.name.toLowerCase().includes(this.state.search));
+    if (this.state.hideDrafted) {
+      filteredTasks = filteredTasks.filter(player => (player.available == null || player.available));
     }
     return filteredTasks.map((task) => (
       <Task key={task._id} task={task} />
@@ -52,20 +47,19 @@ class App extends Component {
     return (
       <div className="container">
         <header>
-          <h1>Todo List ({this.props.incompleteCount})</h1>
-
+	  <h1>Draft Kit</h1>
 
           <label className="hide-completed">
             <input
               type="checkbox"
               readOnly
-              checked={this.state.hideCompleted}
-              onClick={this.toggleHideCompleted.bind(this)}
+              checked={this.state.hideDrafted}
+              onClick={this.toggleHideDrafted.bind(this)}
             />
-            Hide Completed Tasks
+            Hide Drafted
           </label>
  
-          <form className="new-task" onSubmit={this.handleSubmit.bind(this)} >
+          <form className="new-task" onChange={this.search.bind(this)} >
             <input
               type="text"
               ref="textInput"
@@ -89,7 +83,7 @@ App.propTypes = {
  
 export default createContainer(() => {
   return {
-    tasks: Tasks.find({}, { sort: { createdAt: -1 } }).fetch(),
+    tasks: Tasks.find({}, { sort: { value: -1 } }).fetch(),
     incompleteCount: Tasks.find({ checked: { $ne: true } }).count(),
   };
 }, App);

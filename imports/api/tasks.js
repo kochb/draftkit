@@ -2,33 +2,29 @@ import { Meteor } from 'meteor/meteor';
 import { Mongo } from 'meteor/mongo';
 import { check } from 'meteor/check';
  
-export const Tasks = new Mongo.Collection('tasks');
+export const Tasks = new Mongo.Collection('players');
  
 Meteor.methods({
+  'players.draft'(playerId) {
+    Tasks.update(playerId, { $set: { available: false } });
+  },
   'tasks.insert'(text) {
     check(text, String);
  
-    // Make sure the user is logged in before inserting a task
-    if (! Meteor.userId()) {
-      throw new Meteor.Error('not-authorized');
-    }
- 
     Tasks.insert({
-      text,
+      name: text,
       createdAt: new Date(),
-      owner: Meteor.userId(),
-      username: Meteor.user().username,
     });
   },
-  'tasks.remove'(taskId) {
-    check(taskId, String);
+  'tasks.remove'(playerId) {
+    check(playerId, String);
  
-    Tasks.remove(taskId);
+    Tasks.update(playerId, { $set: { available: false } });
   },
-  'tasks.setChecked'(taskId, setChecked) {
-    check(taskId, String);
+  'tasks.setChecked'(playerId, setChecked) {
+    check(playerId, String);
     check(setChecked, Boolean);
  
-    Tasks.update(taskId, { $set: { checked: setChecked } });
+    Tasks.update(playerId, { $set: { checked: setChecked } });
   },
 });

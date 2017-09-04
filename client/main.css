@@ -53,6 +53,10 @@ form {
 .new-task input:focus{
   outline: 0;
 }
+
+.player span {
+  margin-left: 1ex;
+}
  
 ul {
   margin: 0;
@@ -61,12 +65,10 @@ ul {
 }
  
 .delete {
-  float: right;
   font-weight: bold;
   background: none;
   font-size: 1em;
   border: none;
-  position: relative;
 }
  
 li {
