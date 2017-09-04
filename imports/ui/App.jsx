@@ -2,8 +2,8 @@ import React, { Component, PropTypes } from 'react';
 import ReactDOM from 'react-dom';
 import { createContainer } from 'meteor/react-meteor-data';
  
-import { Tasks } from '../api/tasks.js';
-import Task from './Task.jsx';
+import { Players } from '../api/players.js';
+import Player from './Player.jsx';
  
 // App component - represents the whole app
 class App extends Component {
@@ -32,14 +32,14 @@ class App extends Component {
     });
   }
  
-  renderTasks() {
-    let filteredTasks = this.props.tasks;
-    filteredTasks = filteredTasks.filter(player => player.name.toLowerCase().includes(this.state.search));
+  renderPlayers() {
+    let filteredPlayers = this.props.players;
+    filteredPlayers = filteredPlayers.filter(player => player.name.toLowerCase().includes(this.state.search));
     if (this.state.hideDrafted) {
-      filteredTasks = filteredTasks.filter(player => (player.available == null || player.available));
+      filteredPlayers = filteredPlayers.filter(player => (player.available == null || player.available));
     }
-    return filteredTasks.map((task) => (
-      <Task key={task._id} task={task} />
+    return filteredPlayers.map((player) => (
+      <Player key={player._id} player={player} />
     ));
   }
  
@@ -59,17 +59,17 @@ class App extends Component {
             Hide Drafted
           </label>
  
-          <form className="new-task" onChange={this.search.bind(this)} >
+          <form className="new-player" onChange={this.search.bind(this)} >
             <input
               type="text"
               ref="textInput"
-              placeholder="Type to add new tasks"
+              placeholder="Search..."
             />
           </form>
         </header>
  
         <ul>
-          {this.renderTasks()}
+          {this.renderPlayers()}
         </ul>
       </div>
     );
@@ -77,13 +77,13 @@ class App extends Component {
 }
 
 App.propTypes = {
-  tasks: PropTypes.array.isRequired,
+  players: PropTypes.array.isRequired,
   incompleteCount: PropTypes.number.isRequired,
 };
  
 export default createContainer(() => {
   return {
-    tasks: Tasks.find({}, { sort: { value: -1 } }).fetch(),
-    incompleteCount: Tasks.find({ checked: { $ne: true } }).count(),
+    players: Players.find({}, { sort: { value: -1 } }).fetch(),
+    incompleteCount: Players.find({ checked: { $ne: true } }).count(),
   };
 }, App);
