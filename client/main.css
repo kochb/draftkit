@@ -57,6 +57,11 @@ form {
 .player span {
   margin-left: 1ex;
 }
+
+.player .value {
+  font-weight: bold;
+  color: green;
+}
  
 ul {
   margin: 0;
@@ -74,7 +79,7 @@ ul {
 li {
   position: relative;
   list-style: none;
-  padding: 15px;
+  padding: 5px 15px;
   border-bottom: #eee solid 1px;
 }
  

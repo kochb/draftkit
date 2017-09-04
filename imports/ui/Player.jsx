@@ -7,12 +7,19 @@ export default class Player extends Component {
   draft() {
     Meteor.call('players.draft', this.props.player._id);
   }
+
+  gone() {
+    Meteor.call('players.gone', this.props.player._id);
+  }
  
   render() {
     return (
       <li className="player">
         <button className="delete" onClick={this.draft.bind(this)}>
-          Drafted
+          Draft
+        </button>
+        <button className="delete" onClick={this.gone.bind(this)}>
+          Gone
         </button>
 
         <span className="name">{this.props.player.name}</span>

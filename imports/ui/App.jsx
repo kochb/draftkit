@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import ReactDOM from 'react-dom';
+import { Meteor } from 'meteor/meteor';
 import { createContainer } from 'meteor/react-meteor-data';
  
 import { Players } from '../api/players.js';
@@ -14,6 +15,10 @@ class App extends Component {
       search: '',
       hideDrafted: true,
     };
+  }
+
+  reset(event) {
+    Meteor.call('players.reset');
   }
  
   search(event) {
@@ -50,6 +55,8 @@ class App extends Component {
       <div className="container">
         <header>
 	  <h1>Draft Kit</h1>
+
+	  <button onClick={this.reset.bind(this)}>Reset</button>
 
           <label className="hide-completed">
             <input
