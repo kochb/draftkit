@@ -6,6 +6,8 @@ import { createContainer } from 'meteor/react-meteor-data';
 import { Players } from '../api/players.js';
 import Player from './Player.jsx';
 
+const is_flex = function (position) { return position == 'WR' || position == 'RB' || position == 'TE'; };
+const roster_limit = 15;
 const limits = {
   'QB': 1,
   'RB': 2,
@@ -14,6 +16,23 @@ const limits = {
   'K': 1,
   'DST': 1,
   'FLEX': 1,
+  'BENCH': 6,
+};
+const team_limits = {
+  'QB': 4,
+  'RB': 8,
+  'WR': 8,
+  'TE': 4,
+  'K': 3,
+  'DST': 3,
+};
+const bench_limits = {
+  'QB': 1,
+  'RB': 6,
+  'WR': 6,
+  'TE': 3,
+  'K': 0,
+  'DST': 0,
 };
  
 // App component - represents the whole app
@@ -78,13 +97,21 @@ class App extends Component {
   }
 
   playerIncrementalValue(player) {
-    let counts = {'QB':0,'RB':0,'WR':0,'TE':0,'FLEX':0,'DST':0,'K':0};
+    let counts = {'QB':0,'RB':0,'WR':0,'TE':0,'FLEX':0,'DST':0,'K':0,'BENCH':0};
+    let bench_counts = {'QB':0,'RB':0,'WR':0,'TE':0,'DST':0,'K':0};
     let filteredPlayers = this.getTeam();
     filteredPlayers.push(player);
     filteredPlayers = filteredPlayers.sort((a, b) => this.playerValue(b) - this.playerValue(a));
     new_value = filteredPlayers.reduce(function (result, player) {
       counts[player.position] += 1;
       if (counts[player.position] <= limits[player.position]) {
+        return result + player.value;
+      } else if (is_flex(player.position) && counts['FLEX'] < limits['FLEX']) {
+        counts['FLEX'] += 1;
+        return result + player.value;
+      } else if (bench_counts[player.position] < bench_limits[player.position]) {
+        counts['BENCH'] += 1;
+	bench_counts[player.position] += 1;
         return result + player.value;
       } else {
         return result;
@@ -96,10 +123,18 @@ class App extends Component {
   teamValue() {
     let filteredPlayers = this.getTeam();
     let counts = {'QB':0,'RB':0,'WR':0,'TE':0,'FLEX':0,'DST':0,'K':0};
+    let bench_counts = {'QB':0,'RB':0,'WR':0,'TE':0,'DST':0,'K':0};
     filteredPlayers = filteredPlayers.sort((a, b) => this.playerValue(b) - this.playerValue(a));
     return filteredPlayers.reduce(function (result, player) {
       counts[player.position] += 1;
       if (counts[player.position] <= limits[player.position]) {
+        return result + player.value;
+      } else if (is_flex(player.position) && counts['FLEX'] < limits['FLEX']) {
+        counts['FLEX'] += 1;
+        return result + player.value;
+      } else if (bench_counts[player.position] < bench_limits[player.position]) {
+        counts['BENCH'] += 1;
+	bench_counts[player.position] += 1;
         return result + player.value;
       } else {
         return result;
