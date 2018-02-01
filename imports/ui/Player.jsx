@@ -27,6 +27,7 @@ export default class Player extends Component {
         <span className="position">{this.props.player.position}</span>
         <span className="value">{this.props.player.value}</span>
         <span className="incremental_value">{this.props.incremental_value}</span>
+        <span className="value_above_replacement">{this.props.value_above_replacement}</span>
       </li>
     );
   }

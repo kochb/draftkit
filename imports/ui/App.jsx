@@ -68,13 +68,13 @@ class App extends Component {
  
   renderPlayers() {
     let filteredPlayers = this.props.players;
-    filteredPlayers = filteredPlayers.filter(player => player.name.toLowerCase().includes(this.state.search));
     if (this.state.hideUnavailable) {
-      filteredPlayers = filteredPlayers.filter(player => (player.available == null || player.available));
+      filteredPlayers = this.getAvailablePlayers();
     }
+    filteredPlayers = filteredPlayers.filter(player => player.name.toLowerCase().includes(this.state.search));
     filteredPlayers = filteredPlayers.sort((a, b) => this.playerIncrementalValue(b) - this.playerIncrementalValue(a));
     return filteredPlayers.map((player) => (
-      <Player key={player._id} player={player} incremental_value={this.playerIncrementalValue(player)} />
+      <Player key={player._id} player={player} incremental_value={this.playerIncrementalValue(player)} value_above_replacement={this.playerValueAboveReplacement(player)} />
     ));
   }
 
@@ -82,6 +82,12 @@ class App extends Component {
     let filteredPlayers = this.props.players;
     filteredPlayers = filteredPlayers.filter(player => player.drafted);
     return filteredPlayers;
+  }
+
+  getAvailablePlayers() {
+    let filteredPlayers = this.props.players;
+    filteredPlayers = filteredPlayers.filter(player => (player.available == null || player.available));
+    return filteredPlayers
   }
  
   renderTeam() {
@@ -120,6 +126,19 @@ class App extends Component {
     return new_value - this.teamValue();
   }
 
+  playerValueAboveReplacement(player) {
+    let filteredPlayers = this.getAvailablePlayers();
+    filteredPlayers = filteredPlayers.filter(replacement => (player.position == replacement.position && player._id != replacement._id));
+    filteredPlayers = filteredPlayers.sort((a, b) => this.playerValue(b) - this.playerValue(a));
+    replacement = filteredPlayers[0];
+    console.log(player, replacement);
+    if (replacement) {
+      return player.value - replacement.value;
+    } else {
+      return 0;
+    }
+  }
+
   teamValue() {
     let filteredPlayers = this.getTeam();
     let counts = {'QB':0,'RB':0,'WR':0,'TE':0,'FLEX':0,'DST':0,'K':0};
@@ -134,7 +153,7 @@ class App extends Component {
         return result + player.value;
       } else if (bench_counts[player.position] < bench_limits[player.position]) {
         counts['BENCH'] += 1;
-	bench_counts[player.position] += 1;
+        bench_counts[player.position] += 1;
         return result + player.value;
       } else {
         return result;
