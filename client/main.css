@@ -53,6 +53,10 @@ div.available, div.team {
   background: white;
 }
 
+.team button {
+  display: none;
+}
+
 .search-player input {
   box-sizing: border-box;
   background: transparent;
@@ -91,6 +95,7 @@ div.available, div.team {
 .player button.draft {
   color: green;
 }
+
 .player button.gone {
   color: red;
 }
