@@ -15,11 +15,11 @@ export default class Player extends Component {
   render() {
     return (
       <li className="player">
-        <button className="delete" onClick={this.draft.bind(this)}>
-          Draft
+        <button className="draft" onClick={this.draft.bind(this)}>
+          +
         </button>
-        <button className="delete" onClick={this.gone.bind(this)}>
-          Gone
+        <button className="gone" onClick={this.gone.bind(this)}>
+          -
         </button>
 
         <span className="name">{this.props.player.name}</span>

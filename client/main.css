@@ -2,30 +2,26 @@
 body {
   font-family: sans-serif;
   background-attachment: fixed;
- 
+
   position: absolute;
   top: 0;
   bottom: 0;
   left: 0;
   right: 0;
- 
+
   padding: 0;
   margin: 0;
- 
+
   font-size: 14px;
 }
- 
+
 header {
   background: #d2edf4;
   background-image: linear-gradient(to bottom, #d0edf5, #e1e5f0 100%);
   padding: 20px 15px 15px 15px;
   position: relative;
 }
- 
-#login-buttons {
-  display: block;
-}
- 
+
 h1 {
   font-size: 1.5em;
   margin: 0;
@@ -33,23 +29,38 @@ h1 {
   display: inline-block;
   margin-right: 1em;
 }
- 
+
+h3 {
+  margin: .1em 0 0 0;
+  padding: 0;
+}
+
 form {
-  margin-top: 10px;
-  margin-bottom: -10px;
   position: relative;
 }
- 
+
+.settings {
+  float: right;
+}
+
+.settings button {
+  margin: 0 1ex;
+}
+
+div.available, div.team {
+  float: left;
+  width: 50%;
+  background: white;
+}
+
 .search-player input {
   box-sizing: border-box;
-  padding: 10px 0;
   background: transparent;
   border: none;
   width: 100%;
-  padding-right: 80px;
   font-size: 1em;
 }
- 
+
 .search-player input:focus{
   outline: 0;
 }
@@ -67,50 +78,53 @@ form {
   font-weight: bold;
   color: red;
 }
- 
+
+.player button {
+  border: none;
+  margin: 0 0 0 1ex;
+  padding: 0;
+  font-family: menlo, monospace;
+  font-weight: bold;
+  font-size: 2ex;
+}
+
+.player button.draft {
+  color: green;
+}
+.player button.gone {
+  color: red;
+}
+
 ul {
-  float: left;
-  width: 50%;
+  border-right: #eee solid 1px;
   margin: 0;
   padding: 0;
-  background: white;
 }
- 
-.delete {
-  font-weight: bold;
-  background: none;
-  font-size: 1em;
-  border: none;
-}
- 
+
 li {
   position: relative;
   list-style: none;
-  padding: 5px 15px;
+  padding: 5px 0;
   border-bottom: #eee solid 1px;
 }
- 
+
 li .text {
   margin-left: 10px;
 }
- 
+
 li.checked {
   color: #888;
 }
- 
+
 li.checked .text {
   text-decoration: line-through;
 }
- 
+
 li.private {
   background: #eee;
   border-color: #ddd;
 }
- 
-header .hide-completed {
-  float: right;
-}
- 
+
 .toggle-private {
   margin-left: 5px;
 }

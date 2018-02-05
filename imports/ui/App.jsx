@@ -166,20 +166,26 @@ class App extends Component {
       <div className="container">
         <header>
 	  <h1>Draft Kit</h1>
+
+	  <div className="settings">
+            <label className="hide-completed">
+              <input
+                type="checkbox"
+                readOnly
+                checked={this.state.hideUnavailable}
+                onClick={this.toggleHideUnavailable.bind(this)}
+              />
+              Hide Unavailable
+            </label>
+
+	    <button className="reset" onClick={this.reset.bind(this)}>Reset</button>
+	  </div>
+
 	  <p>Team Value {this.teamValue()}</p>
-
-	  <button onClick={this.reset.bind(this)}>Reset</button>
-
-          <label className="hide-completed">
-            <input
-              type="checkbox"
-              readOnly
-              checked={this.state.hideUnavailable}
-              onClick={this.toggleHideUnavailable.bind(this)}
-            />
-            Hide Unavailable
-          </label>
+        </header>
  
+	<div className="available">
+	  <h3>Available</h3>
           <form className="search-player" onChange={this.search.bind(this)} >
             <input
               type="text"
@@ -187,15 +193,17 @@ class App extends Component {
               placeholder="Search..."
             />
           </form>
-        </header>
- 
-        <ul>
-          {this.renderPlayers()}
-        </ul>
+          <ul>
+            {this.renderPlayers()}
+          </ul>
+	</div>
 
-        <ul className="drafted">
-          {this.renderTeam()}
-        </ul>
+        <div className="team">
+	  <h3>My Team</h3>
+          <ul className="drafted">
+            {this.renderTeam()}
+          </ul>
+	</div>
       </div>
     );
   }
