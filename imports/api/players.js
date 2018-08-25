@@ -7,9 +7,7 @@ export const Players = new Mongo.Collection('players');
  
 Meteor.methods({
   'players.reset'() {
-    for (let player of Players.find().fetch()) {
-      Players.remove(player.id);
-    }
+    Players.remove({})
     for (let player of raw_players) {
       Players.insert(player);
     }
