@@ -204,7 +204,7 @@ data.raw_players = [
     [null,false,'Julius Thomas','Mia','TE',null,null,null,52,'0/0',0,0,0,0,0,0,30,281,4,52,0,0,0,82.1],
     [null,false,'Jesse James','Pit','TE',null,null,null,51,'0/0',0,0,0,0,0,0,39,338,3,59,0,0,0,90.8],
     [null,false,'Jermaine Gresham','Ari','TE',null,null,null,51,'0/0',0,0,0,0,0,0,37,391,2,61,0,0,0,88.1],
-    [null,false,'Dorial Green-Beckham, Phi WR','WR',null,null,null,51,'0/0',0,0,0,0,0,0,36,392,2,74,0,0,0,87.2],
+    [null,false,'Dorial Green-Beckham','WR',null,null,null,51,'0/0',0,0,0,0,0,0,36,392,2,74,0,0,0,87.2],
     [null,false,'Andrew Hawkins','Cle','WR',null,null,null,50,'0/0',0,0,0,2,0,0,33,324,3,54,0,0,0,83.4],
     [null,false,'Albert Wilson','KC','WR',null,null,null,50,'0/0',0,0,0,2,50,1,31,279,2,51,0,0,0,81.9],
     [null,false,'Nelson Agholor','Phi','WR',null,null,null,49,'0/0',0,0,0,5,14,0,36,365,2,70,1,0,0,87.9],
