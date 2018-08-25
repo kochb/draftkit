@@ -171,9 +171,9 @@ class App extends Component {
     return (
       <div className="container">
         <header>
-	  <h1>Draft Kit</h1>
+          <h1>Draft Kit</h1>
 
-	  <div className="settings">
+          <div className="settings">
             <label className="hide-completed">
               <input
                 type="checkbox"
@@ -184,14 +184,14 @@ class App extends Component {
               Hide Unavailable
             </label>
 
-	    <button className="reset" onClick={this.reset.bind(this)}>Reset</button>
-	  </div>
+            <button className="reset" onClick={this.reset.bind(this)}>Reset</button>
+          </div>
 
-	  <p>Team Value {this.teamValue()}</p>
+          <p>Team Value {this.teamValue()}</p>
         </header>
  
-	<div className="available">
-	  <h3>Available</h3>
+        <div className="available">
+          <h3>Available</h3>
           <form className="search-player" onChange={this.search.bind(this)} >
             <input
               type="text"
@@ -199,17 +199,17 @@ class App extends Component {
               placeholder="Search..."
             />
           </form>
-          <ul>
+          <table>
             {this.renderPlayers()}
-          </ul>
-	</div>
+          </table>
+        </div>
 
         <div className="team">
-	  <h3>My Team</h3>
+          <h3>My Team</h3>
           <ul className="drafted">
             {this.renderTeam()}
           </ul>
-	</div>
+        </div>
       </div>
     );
   }
