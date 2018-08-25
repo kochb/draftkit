@@ -8,8 +8,21 @@ export const Players = new Mongo.Collection('players');
  
 Meteor.methods({
   'players.reset'() {
-    Players.remove({})
+    Players.remove({});
+
+    players = {};
     for (let player of players_2017) {
+      players[player.name] = player;
+    }
+    for (let player of players_2016) {
+      if (players[player.name]) {
+        players[player.name].top_player_2016 = player.top_player_2016;
+      } else {
+        players[player.name] = player;
+      }
+    }
+    for (let key in players) {
+      player = players[key];
       Players.insert(player);
     }
   },

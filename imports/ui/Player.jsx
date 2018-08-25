@@ -28,6 +28,8 @@ export default class Player extends Component {
         <span className="value">{this.props.player.value}</span>
         <span className="incremental_value">{this.props.incremental_value}</span>
         <span className="value_above_replacement">{this.props.value_above_replacement}</span>
+        <span className="top_player top_player_2016">{this.props.top_player_2016 ? '★' : ''}</span>
+        <span className="top_player top_player_2017">{this.props.top_player_2017 ? '★' : ''}</span>
       </li>
     );
   }

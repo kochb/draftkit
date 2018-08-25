@@ -1,5 +1,5 @@
 var data = {};
-var keys = ['available', 'star', 'name', 'team', 'position', 'value', 'targeting', 'targeting_2017', 'green_flag', 'red_flag', 'passing_completions_attempts', 'passing_yds', 'passing_tds', 'passing_ints', 'rushing_attempts', 'rushing_yds', 'rushing tds', 'receptions', 'receiving_yards', 'receiving_tds', 'targets', '2pc', 'fumble', 'misc_td', 'total'];
+var keys = ['available', 'top_player_2017', 'name', 'team', 'position', 'value', 'targeting', 'targeting_2017', 'green_flag', 'red_flag', 'passing_completions_attempts', 'passing_yds', 'passing_tds', 'passing_ints', 'rushing_attempts', 'rushing_yds', 'rushing tds', 'receptions', 'receiving_yards', 'receiving_tds', 'targets', '2pc', 'fumble', 'misc_td', 'total'];
 
 var map_player = function(player) {
     return player.reduce(function (result, v, i) {

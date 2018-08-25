@@ -74,7 +74,13 @@ class App extends Component {
     filteredPlayers = filteredPlayers.filter(player => player.name.toLowerCase().includes(this.state.search));
     filteredPlayers = filteredPlayers.sort((a, b) => this.playerIncrementalValue(b) - this.playerIncrementalValue(a));
     return filteredPlayers.map((player) => (
-      <Player key={player._id} player={player} incremental_value={this.playerIncrementalValue(player)} value_above_replacement={this.playerValueAboveReplacement(player)} />
+      <Player
+        key={player._id}
+        player={player}
+        incremental_value={this.playerIncrementalValue(player)}
+        value_above_replacement={this.playerValueAboveReplacement(player)}
+        top_player_2016={player.top_player_2016}
+        top_player_2017={player.top_player_2017}/>
     ));
   }
 
