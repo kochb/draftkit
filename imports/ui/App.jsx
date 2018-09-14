@@ -200,15 +200,41 @@ class App extends Component {
             />
           </form>
           <table>
+            <thead>
+              <tr>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th>VAR</th>
+                <th>16</th>
+                <th>17</th>
+                <th>18P</th>
+              </tr>
+            </thead>
             {this.renderPlayers()}
           </table>
         </div>
 
         <div className="team">
           <h3>My Team</h3>
-          <ul className="drafted">
+          <table>
+            <thead>
+              <tr>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th>VAR</th>
+                <th>16</th>
+                <th>17</th>
+                <th>18P</th>
+              </tr>
+            </thead>
             {this.renderTeam()}
-          </ul>
+          </table>
         </div>
       </div>
     );
