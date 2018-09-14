@@ -105,7 +105,7 @@ class App extends Component {
   }
 
   playerValue(player) {
-    return player.value;
+    return player.value_2018;
   }
 
   playerIncrementalValue(player) {
