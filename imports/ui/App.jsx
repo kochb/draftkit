@@ -74,7 +74,13 @@ class App extends Component {
     filteredPlayers = filteredPlayers.filter(player => player.name.toLowerCase().includes(this.state.search));
     filteredPlayers = filteredPlayers.sort((a, b) => this.playerIncrementalValue(b) - this.playerIncrementalValue(a));
     return filteredPlayers.map((player) => (
-      <Player key={player._id} player={player} incremental_value={this.playerIncrementalValue(player)} value_above_replacement={this.playerValueAboveReplacement(player)} />
+      <Player
+        key={player._id}
+        player={player}
+        incremental_value={this.playerIncrementalValue(player)}
+        value_above_replacement={this.playerValueAboveReplacement(player)}
+        top_player_2016={player.top_player_2016}
+        top_player_2017={player.top_player_2017}/>
     ));
   }
 
@@ -99,7 +105,7 @@ class App extends Component {
   }
 
   playerValue(player) {
-    return player.value;
+    return player.value_2018;
   }
 
   playerIncrementalValue(player) {
@@ -117,7 +123,7 @@ class App extends Component {
         return result + player.value;
       } else if (bench_counts[player.position] < bench_limits[player.position]) {
         counts['BENCH'] += 1;
-	bench_counts[player.position] += 1;
+        bench_counts[player.position] += 1;
         return result + player.value;
       } else {
         return result;
@@ -165,9 +171,9 @@ class App extends Component {
     return (
       <div className="container">
         <header>
-	  <h1>Draft Kit</h1>
+          <h1>Draft Kit</h1>
 
-	  <div className="settings">
+          <div className="settings">
             <label className="hide-completed">
               <input
                 type="checkbox"
@@ -178,14 +184,14 @@ class App extends Component {
               Hide Unavailable
             </label>
 
-	    <button className="reset" onClick={this.reset.bind(this)}>Reset</button>
-	  </div>
+            <button className="reset" onClick={this.reset.bind(this)}>Reset</button>
+          </div>
 
-	  <p>Team Value {this.teamValue()}</p>
+          <p>Team Value {this.teamValue()}</p>
         </header>
  
-	<div className="available">
-	  <h3>Available</h3>
+        <div className="available">
+          <h3>Available</h3>
           <form className="search-player" onChange={this.search.bind(this)} >
             <input
               type="text"
@@ -193,17 +199,43 @@ class App extends Component {
               placeholder="Search..."
             />
           </form>
-          <ul>
+          <table>
+            <thead>
+              <tr>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th>VAR</th>
+                <th>16</th>
+                <th>17</th>
+                <th>18P</th>
+              </tr>
+            </thead>
             {this.renderPlayers()}
-          </ul>
-	</div>
+          </table>
+        </div>
 
         <div className="team">
-	  <h3>My Team</h3>
-          <ul className="drafted">
+          <h3>My Team</h3>
+          <table>
+            <thead>
+              <tr>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th>VAR</th>
+                <th>16</th>
+                <th>17</th>
+                <th>18P</th>
+              </tr>
+            </thead>
             {this.renderTeam()}
-          </ul>
-	</div>
+          </table>
+        </div>
       </div>
     );
   }

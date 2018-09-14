@@ -133,3 +133,7 @@ li.private {
 .toggle-private {
   margin-left: 5px;
 }
+
+.top_player {
+  font-weight: bold;
+}

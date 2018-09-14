@@ -14,21 +14,40 @@ export default class Player extends Component {
  
   render() {
     return (
-      <li className="player">
-        <button className="draft" onClick={this.draft.bind(this)}>
-          +
-        </button>
-        <button className="gone" onClick={this.gone.bind(this)}>
-          -
-        </button>
+      <tr className="player">
+        <td>
+          <button className="draft" onClick={this.draft.bind(this)}>
+            +
+          </button>
+        </td>
+        <td>
+          <button className="gone" onClick={this.gone.bind(this)}>
+            -
+          </button>
+        </td>
 
-        <span className="name">{this.props.player.name}</span>
-        <span className="team">{this.props.player.team}</span>
-        <span className="position">{this.props.player.position}</span>
-        <span className="value">{this.props.player.value}</span>
-        <span className="incremental_value">{this.props.incremental_value}</span>
-        <span className="value_above_replacement">{this.props.value_above_replacement}</span>
-      </li>
+        <td>
+          <span className="name">{this.props.player.name}</span>
+        </td>
+        <td>
+          <span className="team">{this.props.player.team}</span>
+        </td>
+        <td>
+          <span className="position">{this.props.player.position}</span>
+        </td>
+        <td>
+          <span className="value_above_replacement">{Math.round(this.props.value_above_replacement)}</span>
+        </td>
+        <td>
+          <span className={this.props.player.top_player_2016 ? "top_player top_player_2016" : ""}>{this.props.player.value_2016}</span>
+        </td>
+        <td>
+          <span className={this.props.player.top_player_2017 ? "top_player top_player_2017" : ""}>{this.props.player.value_2017}</span>
+        </td>
+        <td>
+          <span className={this.props.player.top_player_2018 ? "top_player top_player_2018 value" : "value"}>{this.props.player.value_2018}</span>
+        </td>
+      </tr>
     );
   }
 }
