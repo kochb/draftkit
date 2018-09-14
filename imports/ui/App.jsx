@@ -123,7 +123,7 @@ class App extends Component {
         return result + player.value;
       } else if (bench_counts[player.position] < bench_limits[player.position]) {
         counts['BENCH'] += 1;
-	bench_counts[player.position] += 1;
+        bench_counts[player.position] += 1;
         return result + player.value;
       } else {
         return result;
