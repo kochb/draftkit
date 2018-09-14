@@ -12,21 +12,20 @@ Meteor.methods({
     Players.remove({});
 
     players = {};
-    for (let player of players_2017) {
+    for (let player of players_2018) {
       players[player.name] = player;
+      players[player.name].value_2018 = player.value
+    }
+    for (let player of players_2017) {
+      if (players[player.name]) {
+        players[player.name].top_player_2017 = player.top_player_2017;
+        players[player.name].value_2017 = player.value
+      }
     }
     for (let player of players_2016) {
       if (players[player.name]) {
         players[player.name].top_player_2016 = player.top_player_2016;
-      } else {
-        players[player.name] = player;
-      }
-    }
-    for (let player of players_2018) {
-      if (players[player.name]) {
-        players[player.name].top_player_2018 = player.top_player_2018;
-      } else {
-        players[player.name] = player;
+        players[player.name].value_2016 = player.value
       }
     }
     for (let key in players) {
