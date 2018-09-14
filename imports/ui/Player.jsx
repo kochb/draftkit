@@ -36,12 +36,6 @@ export default class Player extends Component {
           <span className="position">{this.props.player.position}</span>
         </td>
         <td>
-          <span className="value">{this.props.player.value}</span>
-        </td>
-        <td>
-          <span className="incremental_value">{this.props.incremental_value}</span>
-        </td>
-        <td>
           <span className="value_above_replacement">{Math.round(this.props.value_above_replacement)}</span>
         </td>
         <td>
